@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save to Local Storage</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .card-custom {
+            background-color: #f8f9fa;
+            transition: transform 0.2s;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-custom-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .link-custom {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .link-custom:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #343a40;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Save to Local Storage</h1>
+        <div class="form-group">
+            <label for="fileContent">Enter some text to save:</label>
+            <textarea class="form-control" id="fileContent" rows="5"></textarea>
+        </div>
+        <button id="saveButton" class="btn btn-primary">Save to Local Storage</button>
+        <button id="loadButton" class="btn btn-secondary">Load from Local Storage</button>
+        <button id="clearButton" class="btn btn-danger">Clear Local Storage</button>
+        <div class="mt-4">
+            <h2>Stored Data:</h2>
+            <pre id="storedData" class="bg-light p-3 rounded border"></pre>
+        </div>
+    </div>
+
+    <script>
+        function displayStoredData() {
+            const storedContent = localStorage.getItem('savedFile');
+            if (storedContent) {
+                document.getElementById('storedData').textContent = storedContent;
+            } else {
+                document.getElementById('storedData').textContent = 'No data found in local storage.';
+            }
+        }
+
+        document.getElementById('saveButton').addEventListener('click', function() {
+            const content = document.getElementById('fileContent').value;
+            localStorage.setItem('savedFile', content);
+            alert('Data saved to local storage!');
+            displayStoredData();
+        });
+
+        document.getElementById('loadButton').addEventListener('click', function() {
+            displayStoredData();
+        });
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            localStorage.removeItem('savedFile');
+            document.getElementById('storedData').textContent = '';
+            alert('Local storage cleared!');
+        });
+
+        // Load the stored data on page load
+        window.onload = function() {
+            displayStoredData();
+        };
+    </script>
+</body>
+</html>
